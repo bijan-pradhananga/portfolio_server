@@ -12,6 +12,7 @@ app.use(cors({
   credentials:true,
     origin: [
     'http://localhost:5173', // for local development
+    'http://localhost:3000',
     'https://portfolio-client-6lmhgue6e-bijans-projects-7b51d8ab.vercel.app/?vercelToolbarCode=uJtJl8oRkHbci6q'
   ]
 }));
