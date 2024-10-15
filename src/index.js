@@ -9,13 +9,14 @@ const port = 3001
 
 app.use(express.json());
 app.use(cors({
-  credentials:true,
-    origin: [
+  credentials: true,
+  origin: [
     'http://localhost:5173', // for local development
-    'http://localhost:3000',
-    'https://portfolio-client-gamma-plum.vercel.app/'
+    'http://localhost:3000', // for another local dev port
+    'https://portfolio-client-gamma-plum.vercel.app' // remove trailing slash
   ]
 }));
+
 
 
 app.use(express.urlencoded({ extended: true }));
