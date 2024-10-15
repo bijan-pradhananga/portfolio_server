@@ -17,7 +17,6 @@ class ProjectController {
             let image = "";
 
             if (req.file) {
-                console.log('image found');
                 image = req.file.path;  // Cloudinary URL of the uploaded image
             }
             const project = await Project.create({
