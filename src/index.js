@@ -1,8 +1,9 @@
 const express = require('express')
+require('dotenv').config();
 const cors = require('cors')
 const router = require('./routes/web')
 const Connection = require('./database/Connection')
-require('dotenv').config();
+
 const app = express()
 const port = 3001
 
@@ -10,9 +11,10 @@ app.use(express.json());
 app.use(cors({
   credentials:true,
     origin: [
-    'http://localhost:3000', // for local development
+    'http://localhost:5173', // for local development
   ]
 }));
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));

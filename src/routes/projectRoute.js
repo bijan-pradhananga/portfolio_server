@@ -1,6 +1,6 @@
 const express = require('express')
 const Project = require('../controllers/ProjectController')
-const UploadMiddleware = require('../middleware/UploadMiddleware')
+const UploadMiddleware = require('../middleware/UploadCloudMiddleware')
 const pInstance = new Project()
 const projectRouter = express.Router()
 const fInstance = new UploadMiddleware();

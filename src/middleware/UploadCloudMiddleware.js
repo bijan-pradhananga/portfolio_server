@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 class UploadCloudMiddleware {
-  
+
   upload(destination) {
     // Set up Cloudinary storage
     this.storage = new CloudinaryStorage({
@@ -30,6 +30,14 @@ class UploadCloudMiddleware {
 
     // Return multer middleware using the Cloudinary storage
     return multer({ storage: this.storage });
+  }
+
+  async deleteImage(publicId) {
+    try {
+      await cloudinary.uploader.destroy(publicId);
+    } catch (error) {
+      throw new Error(`Failed to delete image: ${error.message}`);
+    }
   }
 }
 
