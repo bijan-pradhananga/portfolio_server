@@ -5,7 +5,7 @@ const fInstance = new UploadMiddleware();
 class ProjectController {
     async index(req, res) {
         try {
-            const projects = await Project.find();
+            const projects = await Project.find().sort({ createdAt: -1 }); // Sort by latest created
             res.status(200).json({ projects });
         } catch (err) {
             res.status(500).json({ message: err.message });
