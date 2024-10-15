@@ -24,13 +24,15 @@ class UploadCloudMiddleware {
         public_id: (req, file) => {
           let fileName = file.originalname.trim().replace(/\.[^/.]+$/, ""); // Remove file extension
           return Date.now() + '-' + Math.round(Math.random() * 1E9) + "-" + fileName;
-        }
+        },
+        transformation: [{ width: 1308, height: 816, crop: "fill" }] // Set resolution to 1308x816
       },
     });
 
     // Return multer middleware using the Cloudinary storage
     return multer({ storage: this.storage });
   }
+
 
   async deleteImage(publicId) {
     try {
