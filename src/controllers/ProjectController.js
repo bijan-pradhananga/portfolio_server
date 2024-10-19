@@ -1,11 +1,29 @@
 const Project = require('../models/Project.js')
+const Category = require('../models/Category.js')
 const UploadMiddleware = require('../middleware/UploadCloudMiddleware');
 const fInstance = new UploadMiddleware();
 
 class ProjectController {
     async index(req, res) {
         try {
-            const projects = await Project.find().sort({ createdAt: -1 }); // Sort by latest created
+            let projects;
+            if (req.query.category) {
+                // Step 1: Find the category by its name
+                const category = await Category.findOne({ name: req.query.category });
+                if (!category) {
+                    return res.status(404).json({ message: 'Category not found' });
+                }
+                // Step 2: Query the projects where category is the category _id
+                projects = await Project.find({ category: category._id })
+                    .sort({ createdAt: -1 })
+                    .populate('category');
+            } else {
+                // If no category filter is applied, return all projects
+                projects = await Project.find()
+                    .sort({ createdAt: -1 })
+                    .populate('category');
+            }
+    
             res.status(200).json({ projects });
         } catch (err) {
             res.status(500).json({ message: err.message });
