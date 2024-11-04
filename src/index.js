@@ -12,7 +12,7 @@ app.use(cors({
   credentials: true,
   origin: [
     'https://portfolio-client-gamma-plum.vercel.app',
-    'https://portfolio-project-form.vercel.app/',
+    'https://portfolio-project-form.vercel.app',
   ]
 }));
 
