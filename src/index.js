@@ -3,18 +3,18 @@ require('dotenv').config();
 const cors = require('cors')
 const router = require('./routes/web')
 const Connection = require('./database/Connection')
+const { setServers } = require("node:dns/promises");
+
+setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express()
 const port = 3001
 
 app.use(express.json());
 app.use(cors({
-  credentials: true,
-  origin: [
-    'https://portfolio-client-gamma-plum.vercel.app',
-    'https://portfolio-project-form.vercel.app',
-  ]
-}));
+  origin: true,
+  credentials: true
+}))
 
 
 

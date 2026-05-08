@@ -33,12 +33,44 @@ class UploadCloudMiddleware {
     return multer({ storage: this.storage });
   }
 
+  uploadMedia(destination) {
+    this.storage = new CloudinaryStorage({
+      cloudinary,
+      params: async (req, file) => {
+        const [, format] = (file.mimetype || '').split('/');
+
+        let fileName = file.originalname.trim().replace(/\.[^/.]+$/, "");
+        const public_id =
+          Date.now() + '-' + Math.round(Math.random() * 1e9) + "-" + fileName;
+
+        return {
+          folder: destination,
+          resource_type: 'auto',
+          format: format || undefined,
+          public_id,
+        };
+      },
+    });
+
+    return multer({ storage: this.storage });
+  }
+
 
   async deleteImage(publicId) {
     try {
       await cloudinary.uploader.destroy(publicId);
     } catch (error) {
       throw new Error(`Failed to delete image: ${error.message}`);
+    }
+  }
+
+  async deleteAsset(publicId, resourceType = 'image') {
+    try {
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: resourceType,
+      });
+    } catch (error) {
+      throw new Error(`Failed to delete asset: ${error.message}`);
     }
   }
 }
