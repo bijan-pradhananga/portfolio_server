@@ -11,7 +11,7 @@ class GalleryController {
         query.category = req.query.category;
       }
 
-      const items = await Gallery.find(query).sort({ createdAt: -1 });
+      const items = await Gallery.find(query).sort({ createdAt: 1 });
       res.status(200).json({ gallery: items });
     } catch (err) {
       res.status(500).json({ message: err.message });
